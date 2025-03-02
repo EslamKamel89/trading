@@ -8,6 +8,7 @@ plugins {
 android {
     namespace = "com.example.trading"
     compileSdk = flutter.compileSdkVersion
+    // compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
