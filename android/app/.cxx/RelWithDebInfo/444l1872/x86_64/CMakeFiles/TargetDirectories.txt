@@ -1,0 +1,2 @@
+D:/windows/my_projects/moneymaker/trading_new/trading/android/app/.cxx/RelWithDebInfo/444l1872/x86_64/CMakeFiles/edit_cache.dir
+D:/windows/my_projects/moneymaker/trading_new/trading/android/app/.cxx/RelWithDebInfo/444l1872/x86_64/CMakeFiles/rebuild_cache.dir

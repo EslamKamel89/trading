@@ -45,6 +45,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.0
+  flutter_native_splash: ^2.4.5
   flutter_otp_text_field: ^1.5.1+1
   flutter_screenutil: ^5.9.3
   flutter_switch: ^0.3.2
@@ -61,6 +62,25 @@ dependencies:
   syncfusion_flutter_gauges: ^28.2.7
   top_snackbar_flutter: ^3.2.0
   url_launcher: ^6.3.1
+
+flutter_native_splash:
+  image: assets/images/moneymaker_splash.png
+  color: "#42a5f5"
+  android_12:
+    # The image parameter sets the splash screen icon image.  If this parameter is not specified,
+    # the app's launcher icon will be used instead.
+    # Please note that the splash screen will be clipped to a circle on the center of the screen.
+    # App icon with an icon background: This should be 960×960 pixels, and fit within a circle
+    # 640 pixels in diameter.
+    # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
+    # 768 pixels in diameter.
+    image: assets/images/moneymaker_launch_icon2.png
+
+    # Splash screen background color.
+    color: "#ceac7f"
+
+    # App icon background color.
+    icon_background_color: "#ceac7f"
 
 dev_dependencies:
 
