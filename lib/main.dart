@@ -1,125 +1,113 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:trading/core/dependency-injection-container/injection_container.dart';
+import 'package:trading/core/firebase_notification/firebase_notification.dart';
+import 'package:trading/core/localization/localization.dart';
+import 'package:trading/core/routing/app_router.dart';
+import 'package:trading/core/routing/app_routes_names.dart';
+import 'package:trading/features/auth/data/repo/auth_repo_implement.dart';
+import 'package:trading/features/auth/presentation/blocs/signup-cubit/signup_cubit.dart';
+import 'package:trading/features/auth/presentation/blocs/singin-cubit/singin_cubit.dart';
+import 'package:trading/features/balance/data/payment_repo_imp.dart';
+import 'package:trading/features/balance/presentation/blocs/add_balance_cubit/add_balance_cubit.dart';
+import 'package:trading/features/balance/presentation/blocs/withdraw_main_balance_cubit/withdraw_main_balance_cubit.dart';
+import 'package:trading/features/balance/presentation/blocs/withdraw_weekly_balance_cubit/withdraw_weekly_balance_cubit.dart';
+import 'package:trading/features/chat/data/chat_repo_implement.dart';
+import 'package:trading/features/chat/presentation/blocs/chat-cubit/chat_cubit.dart';
+import 'package:trading/features/notifications-news-certifications/data/news_repo_implement.dart';
+import 'package:trading/features/notifications-news-certifications/presentation/blocs/news-cubit/news_cubit.dart';
+import 'package:trading/features/onboarding-pick-language/peresentation/blocs/cubit/pick_language_cubit.dart';
+import 'package:trading/features/support/data/support_repo_implement.dart';
+import 'package:trading/features/support/presentation/blocs/support-cubit/support_cubit.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await init();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseMessaging.onBackgroundMessage(FirebaseHelper.firebaseMessagingBackgroundHandler);
+  // runApp(DevicePreview(
+  //     enabled: !kReleaseMode,
+  //     builder: (context) {
+  //       return const MyApp();
+  //     }));
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+    FirebaseHelper.getToken();
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<PickLanguageAndThemeCubit>(
+              create: (context) => sl<PickLanguageAndThemeCubit>()
+                ..checkCachedLanguage()
+                ..checkCachedTheme(),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            BlocProvider<SignupCubit>(create: (context) => SignupCubit(authRepo: sl<AuthRepo>())),
+            BlocProvider<SigninCubit>(create: (context) => SigninCubit(authRepo: sl<AuthRepo>())),
+            BlocProvider<ChatCubit>(create: (context) => ChatCubit(chatRepo: sl<ChatRepo>())),
+            BlocProvider<AddBalanceCubit>(create: (context) => AddBalanceCubit(paymentRepo: sl<PaymentRepo>())),
+            BlocProvider<NewsCubit>(create: (context) => NewsCubit(newsRepo: sl<NewsRepo>())),
+            BlocProvider<SupportCubit>(create: (context) => SupportCubit(supportRepo: sl<SupportRepo>())),
+            BlocProvider<WithdrawMainBalanceCubit>(
+                create: (context) => WithdrawMainBalanceCubit(paymentRepo: sl<PaymentRepo>())),
+            BlocProvider<WithdrawWeeklyBalanceCubit>(
+                create: (context) => WithdrawWeeklyBalanceCubit(paymentRepo: sl<PaymentRepo>())),
           ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+          child: Builder(builder: (context) {
+            final PickLanguageAndThemeCubit pickLanguageCubit = context.watch<PickLanguageAndThemeCubit>();
+            // pickLanguageCubit.checkCachedTheme();
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: pickLanguageCubit.state.themeData,
+              initialRoute: AppRoutesNames.splashScreen,
+              // initialRoute: AppRoutesNames.transactionHistory,
+              onGenerateRoute: sl<AppRouter>().onGenerateRoute,
+              locale: pickLanguageCubit.state.locale,
+              supportedLocales: const [
+                Locale('en'),
+                Locale('ar'),
+              ],
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                AppLocalization.delegate,
+              ],
+              localeResolutionCallback: (deviceLocale, supportedLocales) {
+                bool languageSupported = false;
+                for (var locale in supportedLocales) {
+                  if (deviceLocale?.languageCode == locale.languageCode) {
+                    languageSupported = true;
+                  }
+                }
+                if (deviceLocale != null && languageSupported) {
+                  return deviceLocale;
+                }
+                return supportedLocales.first;
+              },
+            );
+          }),
+        );
+      },
     );
   }
 }

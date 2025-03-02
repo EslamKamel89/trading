@@ -1,0 +1,49 @@
+withdrawHistory id 42
+{
+  "data": [
+    {
+      "id": 27, *
+      "image": null, *
+      "amount": 100, *
+      "account": " 88654", // only in withdraw 
+      "user_id": 42, *
+      "accepted": "0", *
+      "payment_id": 3, *
+      "process": null, 
+      "refuse_reason": "Jhg", *
+      "type": "deposit", only in withdraw  and labeled wrong but i an not using it
+      "created_at": "2024-07-12 00:19:51", *
+      "updated_at": "2024-07-12 00:20:53", *
+      "profile": "1719425487.jpg", *
+      "first_name": "hamada1", *
+      "name": "المحافظ الإلكترونية - digital wallets", * in deposit the value is profit
+      "payments_image": "1720544776.png"
+    },
+  ],
+  "status": "success",
+  "error": false
+}
+
+deposit 48 
+{
+  "data": [
+    {
+      "id": 24, *
+      "amount": 300, *
+      "user_id": 42, *
+      "image": "0.jpg", *
+      "accepted": "1", *
+      "payment_id": 2, *
+      "process": null, // in both and equal null
+      "refuse_reason": null, *
+      "created_at": "2024-07-12 00:03:19", *
+      "updated_at": "2024-07-12 00:03:19", *
+      "first_name": "hamada1", *
+      "profile": "1719425487.jpg", *
+      "name": "profit", *
+      "payments_image": "1716824408.jpg" *
+    }
+  ],
+  "status": "success",
+  "error": false
+}
