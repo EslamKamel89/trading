@@ -1,4 +1,4 @@
-package com.example.trading
+package com.moneymaker.bundleId
 
 import io.flutter.embedding.android.FlutterActivity
 
