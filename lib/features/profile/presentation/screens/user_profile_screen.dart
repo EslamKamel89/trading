@@ -10,6 +10,7 @@ import 'package:trading/features/auth/data/repo/auth_repo_implement.dart';
 import 'package:trading/features/auth/domain/models/user_model.dart';
 import 'package:trading/features/onboarding-pick-language/peresentation/blocs/cubit/pick_language_cubit.dart';
 import 'package:trading/features/profile/presentation/widgets/change_password_user_profile.dart';
+import 'package:trading/features/profile/presentation/widgets/delete_account.dart';
 import 'package:trading/features/profile/presentation/widgets/logout_user_profile.dart';
 import 'package:trading/features/profile/presentation/widgets/user_profile_poto.dart';
 
@@ -53,6 +54,9 @@ class UserProfileScreen extends StatelessWidget {
                   Divider(color: Clr.f),
                   SizedBox(height: 15.h),
                   const LogoutUserProfile(),
+                  Divider(color: Clr.f),
+                  SizedBox(height: 15.h),
+                  const DeleteAccount(),
                 ],
               ),
             ),
@@ -60,9 +64,6 @@ class UserProfileScreen extends StatelessWidget {
         });
   }
 }
-
-
-
 
 /*
 UserModel(id: 6, userName: gamel, fullName: gamel gamel gamel, gender: null, email: gamel@gmail.com, mobile: 012856485584, emailVerifiedAt: null, password: $2y$12$GR8RlLiyqbcQVAA02bSzaeJQlYL5.XZuL/fGCig5FKt9RusAZT.Fa, profile: 1715372327.jpg, passport: 1715372330.jpg, passportBack: 1715372333.jpg, levelId: 2, rememberToken: null, createdAt: 2024-05-10 20:18:56.000Z, updatedAt: 2024-05-10 20:18:56.000Z)
